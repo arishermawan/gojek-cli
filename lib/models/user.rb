@@ -21,7 +21,9 @@ module GoCLI
       data = JSON.parse(file)
 
       self.new(
-        phone:    data['phone'],
+        name: data['name'],
+        email: data['email'],
+        phone: data['phone'],
         password: data['password']
       )
     end

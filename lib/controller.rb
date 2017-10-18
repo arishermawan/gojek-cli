@@ -42,6 +42,8 @@ module GoCLI
         clear_screen(opts)
         form = View.login(opts)
 
+        puts form
+
         # Check if user inputs the correct credentials in the login form
         if credential_match?(form[:user], form[:login], form[:password])
           halt = true
@@ -118,7 +120,7 @@ module GoCLI
 
       # TODO: credential matching with email or phone
       def credential_match?(user, login, password)
-        return false unless user.phone == login
+        return false unless user.email == login || user.phone == login
         return false unless user.password == password
         return true
       end
