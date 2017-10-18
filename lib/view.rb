@@ -95,7 +95,7 @@ module GoCLI
     def self.edit_profile(opts = {})
       form = opts
 
-      puts 'Registration'
+      puts 'Edit Profile'
       puts ''
 
       print 'Your Name: '
@@ -110,7 +110,13 @@ module GoCLI
       print 'Your password: '
       form[:password] = gets.chomp
 
-      form[:steps] << {id: __method__}
+      puts ''
+
+      puts '1. Save Profile'
+      puts '2. Discard'
+
+      print 'Enter your option: '
+      form[:steps] << {id: __method__, option: gets.chomp}
 
      form
     end

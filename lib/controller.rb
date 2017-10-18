@@ -26,12 +26,8 @@ module GoCLI
 
       user.save!
 
-
-
       # Assigning form[:user] with user object
       form[:user] = user
-
-      puts form[:user]
       # Returning the form
       form
     end
@@ -96,6 +92,34 @@ module GoCLI
     # TODO: Complete edit_profile method
     # This will be invoked when user choose Edit Profile menu in view_profile screen
     def edit_profile(opts = {})
+      clear_screen(opts)
+      form = View.edit_profile(opts)
+
+      case form[:steps].last[:option].to_i
+      when 1
+        # Save edited
+      user = User.new(
+        name:    form[:name],
+        email:    form[:email],
+        phone:    form[:phone],
+        password: form[:password]
+      )
+
+      user.save!
+
+      # Assigning form[:user] with user object
+      form[:user] = user
+        view_profile(form)
+      when 2
+        main_menu(form)
+      else
+        form[:flash_msg] = "Wrong option entered, please retry."
+        edit_profile(form)
+      end
+
+
+
+
     end
 
     # TODO: Complete order_goride method
