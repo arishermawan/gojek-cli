@@ -24,7 +24,7 @@ module GoCLI
 
       form[:steps] << {id: __method__}
 
-      form
+     form
     end
 
     def self.login(opts = {})
@@ -33,7 +33,7 @@ module GoCLI
       puts 'Login'
       puts ''
 
-      print 'Enter your login: '
+      print 'Enter your Phone Number or Email: '
       form[:login] = gets.chomp
 
       print 'Enter your password: '

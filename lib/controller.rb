@@ -18,16 +18,20 @@ module GoCLI
       # - invoke ".save!" method to user object
       # TODO: enable saving name and email
       user = User.new(
-        name :    form[:name]
-        email:    form[:email]
+        name:    form[:name],
+        email:    form[:email],
         phone:    form[:phone],
         password: form[:password]
       )
+
       user.save!
+
+
 
       # Assigning form[:user] with user object
       form[:user] = user
 
+      puts form[:user]
       # Returning the form
       form
     end
