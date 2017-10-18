@@ -70,6 +70,15 @@ module GoCLI
       puts ''
 
       # Show user data here
+
+      # puts form
+
+      puts "name : #{form[:user].name}"
+      puts "email : #{form[:user].email}"
+      puts "phone : #{form[:user].phone}"
+      puts "password : #{form[:user].password}"
+
+
       puts ''
 
       puts '1. Edit Profile'
@@ -84,6 +93,26 @@ module GoCLI
     # TODO: Complete edit_profile method
     # This is invoked if user chooses Edit Profile menu when viewing profile
     def self.edit_profile(opts = {})
+      form = opts
+
+      puts 'Registration'
+      puts ''
+
+      print 'Your Name: '
+      form[:name] = gets.chomp
+
+      print 'Your Email: '
+      form[:email] = gets.chomp
+
+      print 'Your phone: '
+      form[:phone] = gets.chomp
+
+      print 'Your password: '
+      form[:password] = gets.chomp
+
+      form[:steps] << {id: __method__}
+
+     form
     end
 
     # TODO: Complete order_goride method

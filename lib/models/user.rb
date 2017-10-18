@@ -2,7 +2,7 @@ require 'json'
 
 module GoCLI
   class User
-    attr_accessor :phone, :password, :email
+    attr_accessor :name, :phone, :password, :email
 
     # TODO: 
     # 1. Add two instance variables: name and email 
