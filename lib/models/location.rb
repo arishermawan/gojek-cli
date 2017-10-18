@@ -32,10 +32,8 @@ module GoCLI
         false
       end
     end
-
     def self.length(start, finish)
       (( (finish.x - start.x)**2 + (finish.y - start.y)**2 ).to_f) ** (0.5)
     end
-    
   end
 end

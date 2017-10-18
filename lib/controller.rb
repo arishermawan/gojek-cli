@@ -1,5 +1,6 @@
 require_relative './models/user'
 require_relative './models/location'
+require_relative './models/order'
 require_relative './view'
 
 module GoCLI
@@ -117,10 +118,7 @@ module GoCLI
         form[:flash_msg] = "Wrong option entered, please retry."
         edit_profile(form)
       end
-
-
-
-
+      form
     end
 
     # TODO: Complete order_goride method
@@ -132,7 +130,7 @@ module GoCLI
       form[:loc2] = Location.is_valid?(form[:order_destination])
 
       if form[:loc1] == false || form[:loc1] == false
-        form[:flash_msg] = "Sorry your location services is not available"
+        form[:flash_msg] = "Sorry our services for your location not available"
         order_goride(form)
       elsif form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location)
         form[:order_price]= Location.length(form[:loc1], form[:loc2])*1500
@@ -152,7 +150,7 @@ module GoCLI
         form[:flash_msg] = "Wrong option entered, please retry."
         order_goride(form)
       end
-
+      form
     end
 
     # TODO: Complete order_goride_confirm method
@@ -162,6 +160,20 @@ module GoCLI
 
     end
 
+    def view_order_history(opts = {})
+      clear_screen(opts)
+      form=opts
+      form[:all_orders] = Order.get_all_orders
+      form = View.view_order_history(form)
+      case form[:steps].last[:option].to_i
+      when 1
+        # Step 4.1.1
+        main_menu(form)
+      else
+        form[:flash_msg] = "Wrong option entered, please retry."
+        view_order_history(form)
+      end
+    end
 
 
     protected

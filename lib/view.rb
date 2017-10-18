@@ -163,6 +163,19 @@ module GoCLI
 
     # TODO: Complete view_order_history method
     def self.view_order_history(opts = {})
+
+      form = opts
+
+      puts form[:all_orders]
+
+      puts '1. Back'
+
+      print 'Enter your option: '
+      form[:steps] << {id: __method__, option: gets.chomp}
+
+     form
+
+
     end
   end
 end
