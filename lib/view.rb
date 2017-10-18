@@ -123,11 +123,42 @@ module GoCLI
 
     # TODO: Complete order_goride method
     def self.order_goride(opts = {})
+      form = opts
+
+      puts 'Order a Go-Ride'
+      puts ''
+
+      print 'Your nearest Location: '
+      form[:order_location] = gets.chomp
+
+      print 'Your destination: '
+      form[:order_destination] = gets.chomp
+     form
     end
 
     # TODO: Complete order_goride_confirm method
     # This is invoked after user finishes inputting data in order_goride method
     def self.order_goride_confirm(opts = {})
+      form = opts
+
+      puts form
+      puts form[:loc1].x
+      puts form[:loc1].y
+      puts form[:loc2].x
+      puts form[:loc2].y
+      puts 'Your order price'
+      puts form[:order_price] 
+
+      puts ''
+
+      puts '1. Confirm order'
+      puts '2. Reset '
+      puts '3. Cancel'
+
+      print 'Enter your option: '
+      form[:steps] << {id: __method__, option: gets.chomp}
+
+     form
     end
 
     # TODO: Complete view_order_history method

@@ -1,4 +1,5 @@
 require_relative './models/user'
+require_relative './models/location'
 require_relative './view'
 
 module GoCLI
@@ -124,12 +125,44 @@ module GoCLI
 
     # TODO: Complete order_goride method
     def order_goride(opts = {})
+      clear_screen(opts)
+      form = View.order_goride(opts)
+      
+      form[:loc1] = Location.is_valid?(form[:order_location])
+      form[:loc2] = Location.is_valid?(form[:order_destination])
+
+      if form[:loc1] == false || form[:loc1] == false
+        form[:flash_msg] = "Sorry your location services is not available"
+        order_goride(form)
+      elsif form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location)
+        form[:order_price]= Location.length(form[:loc1], form[:loc2])*1500
+      end
+          
+      form = View.order_goride_confirm(opts)
+
+      case form[:steps].last[:option].to_i
+      when 1
+        # Step 4.1.1
+        order_goride_confirm(form)
+      when 2
+        order_goride(form)
+      when 3
+        main_menu(form)
+      else
+        form[:flash_msg] = "Wrong option entered, please retry."
+        order_goride(form)
+      end
+
     end
 
     # TODO: Complete order_goride_confirm method
     # This will be invoked after user finishes inputting data in order_goride method
     def order_goride_confirm(opts = {})
+  
+
     end
+
+
 
     protected
       # You don't need to modify this 
