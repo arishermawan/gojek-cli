@@ -71,8 +71,6 @@ module GoCLI
 
       # Show user data here
 
-      # puts form
-
       puts "name : #{form[:user].name}"
       puts "email : #{form[:user].email}"
       puts "phone : #{form[:user].phone}"
@@ -97,7 +95,6 @@ module GoCLI
 
       puts 'Edit Profile'
       puts ''
-
       print 'Your Name: '
       form[:name] = gets.chomp
 

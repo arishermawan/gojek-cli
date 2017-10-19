@@ -26,12 +26,14 @@ module GoCLI
         password: form[:password]
       )
 
-      user.save!
-
-      # Assigning form[:user] with user object
-      form[:user] = user
-      # Returning the form
-      form
+      if user.validate==true
+        user.save!
+        form[:user] = user
+        form
+      else
+        form[:flash_msg] = "Form cannot be empty."
+        registration(form)
+      end
     end
     
     def login(opts = {})
@@ -39,9 +41,6 @@ module GoCLI
       while !halt
         clear_screen(opts)
         form = View.login(opts)
-
-        puts form
-
         # Check if user inputs the correct credentials in the login form
         if credential_match?(form[:user], form[:login], form[:password])
           halt = true
@@ -107,11 +106,15 @@ module GoCLI
         password: form[:password]
       )
 
-      user.save!
-
-      # Assigning form[:user] with user object
-      form[:user] = user
+      if user.validate==true
+        user.save!
+        form[:user] = user
         view_profile(form)
+      else
+        form[:flash_msg] = "Form cannot be empty."
+        edit_profile(form)
+      end
+     
       when 2
         main_menu(form)
       else
