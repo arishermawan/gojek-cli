@@ -141,7 +141,9 @@ module GoCLI
       case form[:steps].last[:option].to_i
       when 1
         # Step 4.1.1
-        order_goride_confirm(form)
+        order=Order.new(form[:order_location], form[:order_destination], form[:order_price])
+        order.insert_order
+        main_menu(form)
       when 2
         order_goride(form)
       when 3
