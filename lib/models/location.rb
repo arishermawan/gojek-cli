@@ -32,8 +32,15 @@ module GoCLI
         false
       end
     end
+
     def self.length(start, finish)
       (( (finish.x - start.x)**2 + (finish.y - start.y)**2 ).to_f) ** (0.5)
     end
+
+    def self.get_driver
+      file = File.read("#{File.expand_path(File.dirname(__FILE__))}/../../data/fleet_location.json")
+      data = JSON.parse(file)
+    end
+
   end
 end

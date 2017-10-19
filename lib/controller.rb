@@ -149,9 +149,21 @@ module GoCLI
       case form[:steps].last[:option].to_i
       when 1
         # Step 4.1.1
-        order=Order.new(form[:order_location], form[:order_destination], form[:order_price])
-        order.insert_order
-        main_menu(form)
+
+        nearest_driver=find_driver(form)
+       
+        if nearest_driver[1]<=1.0
+          # puts "mr #{nearest_driver[0]} akan mengantar anda"
+          form[:driver]=nearest_driver[0]
+          order=Order.new(form[:order_location], form[:order_destination], form[:order_price])
+          order.insert_order
+           form[:flash_msg] = "Order Complete #{form[:driver]} will drive you to #{form[:order_destination]}"
+          order_goride_complete(form)
+        else
+          form[:flash_msg] = "Sorry we cant find a driver righ now."
+          order_goride_complete(form)
+        end
+
       when 2
         order_goride(form)
       when 3
@@ -161,6 +173,41 @@ module GoCLI
         order_goride_confirm(form)
       end
       form
+    end
+
+     def order_goride_complete(opts = {})
+      clear_screen(opts)
+      form = View.order_goride_complete(opts)
+
+      case form[:steps].last[:option].to_i
+      when 1
+          main_menu(form)
+      else
+        form[:flash_msg] = "Wrong option entered, please retry."
+        order_goride_complete(form)
+      end
+      form
+    end
+
+
+
+    def find_driver(opts = {})
+        form=opts
+
+        all_driver = Location.get_driver
+
+        hsh = {}
+        all_driver.each do |d|
+          hsh[d['driver']] = Location.new(d['coord'][0], d['coord'][1]) 
+        end
+
+        driver_length = {}
+        hsh.each do |k,v|
+          driver_length[k] = Location.length(form[:loc1], v)
+        end
+
+        nearest=driver_length.min_by { |k,v| v }
+        nearest
     end
 
     def view_order_history(opts = {})

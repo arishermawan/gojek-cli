@@ -156,6 +156,17 @@ module GoCLI
      form
     end
 
+    def self.order_goride_complete(opts = {})
+      form = opts
+
+
+      puts '1. main menu'
+
+      print 'Enter your option: '
+      form[:steps] << {id: __method__, option: gets.chomp}
+     form
+    end
+
     # TODO: Complete view_order_history method
     def self.view_order_history(opts = {})
 
@@ -170,7 +181,6 @@ module GoCLI
 
       print 'Enter your option: '
       form[:steps] << {id: __method__, option: gets.chomp}
-
      form
 
 

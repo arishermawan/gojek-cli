@@ -1,0 +1,19 @@
+[
+  {
+    "driver": "Budi",
+    "coord": [1,2]
+  }, 
+  {
+    "driver": "Anna",
+    "coord": [-20,5]
+  },
+  {
+    "driver": "Aris",
+    "coord": [16, 35]
+  },
+  {
+    "driver": "Budi",
+    "coord": [15, 35.5]
+  }
+
+]
