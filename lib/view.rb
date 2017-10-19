@@ -122,10 +122,16 @@ module GoCLI
     def self.order_goride(opts = {})
       form = opts
 
+      puts form
+
       puts 'Order a Go-Ride'
       puts ''
 
-      print 'Your nearest Location: '
+      print 'Service : 1. Go-Jek  2. Go-Car'
+      puts ''
+      form[:service]=gets.chomp
+
+      print 'Your Location: '
       form[:order_location] = gets.chomp
 
       print 'Your destination: '
@@ -137,6 +143,7 @@ module GoCLI
     # This is invoked after user finishes inputting data in order_goride method
     def self.order_goride_confirm(opts = {})
       form = opts
+      puts form
       puts "Go-Ride from #{form[:order_location]} to #{form[:order_destination]}"
       puts 'Your order price'
       puts form[:order_price] 

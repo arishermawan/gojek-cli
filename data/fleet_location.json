@@ -1,1 +1,1 @@
-[{"driver":"Buci","coord":[20,35]},{"driver":"Anna","coord":[-20,5]},{"driver":"Aris","coord":[20,35]},{"driver":"Budi","coord":[25,25]}]
+[{"driver":"Buci","coord":[20,35],"type":"gocar"},{"driver":"Anna","coord":[-20,5],"type":"gojek"},{"driver":"Aris","coord":[15,35],"type":"gocar"},{"driver":"Budi","coord":[10,15],"type":"gojek"}]

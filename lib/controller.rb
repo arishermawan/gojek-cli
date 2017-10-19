@@ -48,7 +48,6 @@ module GoCLI
           form[:flash_msg] = "Wrong login or password combination"
         end
       end
-
       return form
     end
     
@@ -106,7 +105,7 @@ module GoCLI
         password: form[:password]
       )
 
-      if user.validate==true
+      if user.validate == true
         user.save!
         form[:user] = user
         view_profile(form)
@@ -135,12 +134,23 @@ module GoCLI
       if (form[:loc1] == false || form[:loc2] == false)
         form[:flash_msg] = "Sorry our services for your location not available"
         order_goride(form)
-      elsif form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location)
-        form[:order_price]= ((Location.length(form[:loc1], form[:loc2])*1500).round)
+
+      elsif (['1','2'].include?(form[:service])==false)
+        form[:flash_msg] = "Please input a valid service number"
+        order_goride(form)
+      
+      elsif (form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location))
+        price=0
+        if form[:service] == '1'
+          price=1500
+        elsif form[:service] == '2'
+          price=2500
+        end
+
+        form[:order_price] = ((Location.length(form[:loc1], form[:loc2])*price).round)
       end
 
       order_goride_confirm(form)
-
     end
 
     # TODO: Complete order_goride_confirm method
@@ -155,16 +165,16 @@ module GoCLI
 
         nearest_driver=find_driver(form)
        
-        if nearest_driver[1]<=1.0
+        if nearest_driver[1] <= 1.0
           # puts "mr #{nearest_driver[0]} akan mengantar anda"
-          form[:driver]=nearest_driver[0]
-          order=Order.new(form[:order_location], form[:order_destination], form[:order_price])
+          form[:driver] = nearest_driver[0]
+          order = Order.new(form[:order_location], form[:order_destination], form[:order_price])
           order.insert_order
           form[:flash_msg] = "Order Complete #{form[:driver]} will drive you to #{form[:order_destination]}"
           Location.move_driver(form[:driver], form[:loc2])
           order_goride_complete(form)
         else
-          form[:flash_msg] = "Sorry we cant find a driver righ now."
+          form[:flash_msg] = "Sorry we cant find a driver right now."
           order_goride_complete(form)
         end
 
@@ -195,19 +205,28 @@ module GoCLI
 
     def find_driver(opts = {})
         form=opts
-
         all_driver = Location.get_driver
 
-        hsh = {}
-        all_driver.each do |d|
-          hsh[d['driver']] = Location.new(d['coord'][0], d['coord'][1]) 
+        go_type=""
+        if form[:service] == '1'
+          go_type="gojek"
+        elsif form[:service] == '2'
+          go_type="gocar"
         end
 
+        vehicle=[]
+        all_driver.each do |d|
+          vehicle<<d if d['type']==go_type
+        end
+
+        hsh = {}
+        vehicle.each do |d|
+          hsh[d['driver']] = Location.new(d['coord'][0], d['coord'][1])
+        end
         driver_length = {}
         hsh.each do |k,v|
           driver_length[k] = Location.length(form[:loc1], v)
         end
-
         nearest=driver_length.min_by { |k,v| v }
         nearest
     end
@@ -219,7 +238,6 @@ module GoCLI
       form = View.view_order_history(form)
       case form[:steps].last[:option].to_i
       when 1
-        # Step 4.1.1
         main_menu(form)
       else
         form[:flash_msg] = "Wrong option entered, please retry."
@@ -227,8 +245,8 @@ module GoCLI
       end
     end
 
-
     protected
+
       # You don't need to modify this 
       def clear_screen(opts = {})
         Gem.win_platform? ? (system "cls") : (system "clear")
