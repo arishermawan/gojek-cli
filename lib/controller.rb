@@ -157,7 +157,8 @@ module GoCLI
           form[:driver]=nearest_driver[0]
           order=Order.new(form[:order_location], form[:order_destination], form[:order_price])
           order.insert_order
-           form[:flash_msg] = "Order Complete #{form[:driver]} will drive you to #{form[:order_destination]}"
+          form[:flash_msg] = "Order Complete #{form[:driver]} will drive you to #{form[:order_destination]}"
+          Location.move_driver(form[:driver], form[:loc2])
           order_goride_complete(form)
         else
           form[:flash_msg] = "Sorry we cant find a driver righ now."
