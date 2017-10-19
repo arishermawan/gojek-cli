@@ -140,12 +140,7 @@ module GoCLI
     # This is invoked after user finishes inputting data in order_goride method
     def self.order_goride_confirm(opts = {})
       form = opts
-
-      puts form
-      puts form[:loc1].x
-      puts form[:loc1].y
-      puts form[:loc2].x
-      puts form[:loc2].y
+      puts "Go-Ride from #{form[:order_location]} to #{form[:order_destination]}"
       puts 'Your order price'
       puts form[:order_price] 
 
@@ -164,9 +159,12 @@ module GoCLI
     # TODO: Complete view_order_history method
     def self.view_order_history(opts = {})
 
-      form = options
-
-      puts form[:all_orders]
+      form = opts
+      i=1
+      form[:all_orders].each do |e|    
+          puts "|#{i}|time: #{e['timestamp']} from: #{e['origin']} to: #{e['destination']} price : #{e['est_price']}"
+          i+=1
+      end
 
       puts '1. Back'
 

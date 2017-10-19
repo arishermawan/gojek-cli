@@ -133,9 +133,17 @@ module GoCLI
         form[:flash_msg] = "Sorry our services for your location not available"
         order_goride(form)
       elsif form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location)
-        form[:order_price]= Location.length(form[:loc1], form[:loc2])*1500
+        form[:order_price]= ((Location.length(form[:loc1], form[:loc2])*1500).round)
       end
-          
+
+      order_goride_confirm(form)
+
+    end
+
+    # TODO: Complete order_goride_confirm method
+    # This will be invoked after user finishes inputting data in order_goride method
+    def order_goride_confirm(opts = {})
+      clear_screen(opts)
       form = View.order_goride_confirm(opts)
 
       case form[:steps].last[:option].to_i
@@ -150,16 +158,9 @@ module GoCLI
         main_menu(form)
       else
         form[:flash_msg] = "Wrong option entered, please retry."
-        order_goride(form)
+        order_goride_confirm(form)
       end
       form
-    end
-
-    # TODO: Complete order_goride_confirm method
-    # This will be invoked after user finishes inputting data in order_goride method
-    def order_goride_confirm(opts = {})
-  
-
     end
 
     def view_order_history(opts = {})
