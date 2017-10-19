@@ -129,8 +129,8 @@ module GoCLI
       clear_screen(opts)
       form = View.order_goride(opts)
       
-      form[:loc1] = Location.is_valid?(form[:order_location])
-      form[:loc2] = Location.is_valid?(form[:order_destination])
+      form[:loc1] = Location.find(form[:order_location])
+      form[:loc2] = Location.find(form[:order_destination])
 
       if (form[:loc1] == false || form[:loc2] == false)
         form[:flash_msg] = "Sorry our services for your location not available"
@@ -192,8 +192,6 @@ module GoCLI
       end
       form
     end
-
-
 
     def find_driver(opts = {})
         form=opts

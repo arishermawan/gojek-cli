@@ -179,8 +179,6 @@ module GoCLI
       print 'Enter your option: '
       form[:steps] << {id: __method__, option: gets.chomp}
      form
-
-
     end
   end
 end

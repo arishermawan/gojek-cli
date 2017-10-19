@@ -10,9 +10,7 @@ module GoCLI
       @y=y
     end
 
-    def self.is_valid?(location)
-        
-      # return nil unless File.file?("#{File.expand_path(File.dirname(__FILE__))}/../../data/locations.json")
+    def self.find(location)
       file = File.read("#{File.expand_path(File.dirname(__FILE__))}/../../data/locations.json")
       data = JSON.parse(file)
       x=0
