@@ -132,7 +132,7 @@ module GoCLI
       form[:loc1] = Location.is_valid?(form[:order_location])
       form[:loc2] = Location.is_valid?(form[:order_destination])
 
-      if form[:loc1] == false || form[:loc1] == false
+      if (form[:loc1] == false || form[:loc2] == false)
         form[:flash_msg] = "Sorry our services for your location not available"
         order_goride(form)
       elsif form[:loc1].is_a?(Location) && form[:loc2].is_a?(Location)
