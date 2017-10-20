@@ -26,9 +26,7 @@ module GoCLI
       data = JSON.parse(file)
     end
 
-    def save(order)
-      # TODO: Add validation before writing user data to file
-      
+    def save(order)   
       File.open("#{File.expand_path(File.dirname(__FILE__))}/../../data/orders.json", "w") do |f|
         f.write JSON.generate(order)
       end
